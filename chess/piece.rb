@@ -1,5 +1,7 @@
 class Piece
-    def initialize(pos)
+    def initialize(color, board, pos)
         
     end
+
+    
 end
