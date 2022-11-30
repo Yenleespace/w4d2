@@ -15,11 +15,21 @@ module Slideable
     def diagonal_dirs
         row_start = self.pos[0]
         col_start = self.pos[1]
-        col_start < row_start ? highest_val, lowest_val = row_start, col_start : highest_val, lowest_val = col_start, row_start
+        
+        up = board.length - col_start
+        down = col_start
+        right = board.length - row_start
+        left = row_start
 
-        (1..board.length - highest_val).each { |i| moves(row_start + i, col_start + i, DIAGONAL_DIRS) }
-        (1..lowest_val).each { |i| moves(row_start - i, col_start - i, DIAGONAL_DIRS)}
+        up < right ? up_right = up : up_right = right
 
+        (1..up_right).each { |i| moves(row_start + i, col_start + i, DIAGONAL_DIRS) }
+        (1..down_left).each { |i| moves(row_start - i, col_start - i, DIAGONAL_DIRS) }
+
+
+        3 = board.length - highest_val
+        2 = lowest_val
+    end
 
     def moves(row, col, arr)
         pos = [row, col]
