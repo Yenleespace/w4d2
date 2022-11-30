@@ -1,13 +1,13 @@
 moudle Stepable
   def moves(*pos_change_arr)
-
+    move_arr = []
     knight = [[[2,-2], [1,-1]] [[1, -1], [2, -2]]]
     king = [[1, 0, -1] [1, 0, -1]]
 
     pos_change_arr.each do |arr|
       arr[0].each do |i|
         arr[1].each do |j|
-          arr << pos[i, j] if valid_move?
+          move_arr << pos[i, j] if valid_move?
         end
       end
     end
@@ -22,25 +22,7 @@ moudle Stepable
         # or on the board and contains a piece of the opposite color
 
     # return the final array of moves
-    two_move = pos_change_arr[0]
-    one_move = [1, 
-
-    king_move = [1, 0, -1], [1, 0, -1]
-
-
-    two_move.each do |i|
-      one_move.each do |j|
-        pos[i, j]
-      end
-    end
-
-    one_move.each do |i|
-      two_move.each do |j|
-        arr << pos[i, j] if valid_move?
-      end
-    end
-
-    return arr 
+    move_arr
   end
 
   private
