@@ -8,12 +8,13 @@ class Board
     end
 
     def populate_pieces(color)
+        # look back at this once we've figured out piece implementation
         piece_arr = [Rook.new(color, self, pos), Bishop, Knight, Queen, King, Bishop, Knight]
 
         color == black ? row_arr = [0, 1] : row_arr = [7,6]
         row_arr.each do |idx|
             (0...@board.length).each do |jdx|
-                pos = [i, j]
+                pos = [i, j]            # we might need to initialize this earlier
                 i == 7 || i == 0 ? add_piece(piece_arr[j], pos) : Pawn.new(color)
             end
         end
