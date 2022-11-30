@@ -2,15 +2,19 @@ require_relative 'piece.rb'
 
 class Board
     def initialize
-        @board = Array.new(8) { Array.new(8) }
-        [Rook, Bishop, Knight, Queen, King, Bishop, Knight, ]
+        @board = Array.new(8) { Array.new(8) { nullPiece.instance } }
+
 
     end
 
-    def populate_pieces(row_arr, col_arr, piece)
-        row_arr.each do |i|
-            col_arr.each do |j|
-                i < 3 ? add_piece(piece, [i, j])
+    def populate_pieces(color)
+        piece_arr = [Rook.new(color, self, pos), Bishop, Knight, Queen, King, Bishop, Knight]
+
+        color == black ? row_arr = [0, 1] : row_arr = [7,6]
+        row_arr.each do |idx|
+            (0...@board.length).each do |jdx|
+                pos = [i, j]
+                i == 7 || i == 0 ? add_piece(piece_arr[j], pos) : Pawn.new(color)
             end
         end
     end
