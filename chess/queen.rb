@@ -10,12 +10,13 @@ class Queen < Piece
   
   def symbol
     @symbol
+    #emoji || symbol.colorize(color)
   end
 
   def moves
 
 
-  private
+  private 
   def move_dirs
 
   end
