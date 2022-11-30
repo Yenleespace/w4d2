@@ -7,8 +7,8 @@ moudle Stepable
     # movement within a column. The pair arrays should be splatted into moves
     # and we iterate through each of the pairs and check if it is a possible
     # movement. 
-    knight = [[[2,-2], [1,-1]], [[1, -1], [2, -2]]]     
-    king = [[1, 0, -1] [1, 0, -1]]
+    # knight = [[[2,-2], [1,-1]], [[1, -1], [2, -2]]]     
+    # king = [[1, 0, -1] [1, 0, -1]]
 
     # this represents the iteration of these row/col pairs
     # arr[0] is row movement, arr[1] is column movement.
