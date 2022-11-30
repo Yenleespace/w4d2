@@ -1,4 +1,5 @@
 class Piece
+    attr_reader :pos, :board, :color
     def initialize(color, board, pos=[])
         @color = color
         @board = board
@@ -7,7 +8,7 @@ class Piece
 
     #come back later ...
     def to_s
-        # self.symbol.to_s 
+        self.symbol.to_s 
     end
 
     def empty?
@@ -27,7 +28,5 @@ class Piece
 
     def move_into_check?(end_pos)
     end
-
-
     
 end

@@ -22,6 +22,7 @@ class Board
 
     def add_piece(piece, pos)
         self[pos] = piece
+        piece.pos = pos
     end
 
     def [](pos)
