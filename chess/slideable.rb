@@ -7,17 +7,18 @@ module Slideable
         col_start = self.pos[1]
 
         (row_start + 1...board.length).each { |i|  moves(i, col_start, HORIZONTAL_DIRS) }
-        (0...row_start).each { |i| moves(row_start - 1 - i, col_start, HORIZONTAL_DIRS) }
+        (1..row_start).each { |i| moves(row_start - i, col_start, HORIZONTAL_DIRS) }
         (col_start + 1...board.length).each { |i| moves(row_start, i, HORIZONTAL_DIRS) }
-        (0...col_start).each { |i| moves(row_start, col_start - 1 - i, HORIZONTAL_DIRS) }
+        (1..col_start).each { |i| moves(row_start, col_start - i, HORIZONTAL_DIRS) }
     end
 
     def diagonal_dirs
         row_start = self.pos[0]
         col_start = self.pos[1]
+        col_start < row_start ? highest_val, lowest_val = row_start, col_start : highest_val, lowest_val = col_start, row_start
 
-        col_start < row_start ? highest_val = row_start : highest_val = col_start
-        (highest_val + 1...board.length).each { |i| moves(row_start + i, col_start + i, DIAGONAL_DIRS) }
+        (1..board.length - highest_val).each { |i| moves(row_start + i, col_start + i, DIAGONAL_DIRS) }
+        (1..lowest_val).each { |i| moves(row_start - i, col_start - i, DIAGONAL_DIRS)}
 
 
     def moves(row, col, arr)
