@@ -1,20 +1,25 @@
 module Slideable
-    HORIZONTAL_DIRS = []
-    DIAGONAL_DIRS = []
+    $horizontal_dirs = []
+    $diagonal_dirs = []
 
     def horizontal_dirs
         #getter 
+        $horizontal_dirs = []
         row_start = self.pos[0]
         col_start = self.pos[1]
 
-        (row_start + 1...board.length).each { |i|  moves(i, col_start, HORIZONTAL_DIRS) }
-        (1..row_start).each { |i| moves(row_start - i, col_start, HORIZONTAL_DIRS) }
-        (col_start + 1...board.length).each { |i| moves(row_start, i, HORIZONTAL_DIRS) }
-        (1..col_start).each { |i| moves(row_start, col_start - i, HORIZONTAL_DIRS) }
+        # hey! uncomment this when we figure out whether diagnonal_dirs works, thanks.
+
+        # (row_start + 1...board.length).each { |i| possible_moves(i, col_start, $horizontal_dirs) }
+        # (1..row_start).each { |i| possible_moves(row_start - i, col_start, $horizontal_dirs) }
+        # (col_start + 1...board.length).each { |i| possible_moves(row_start, i, $horizontal_dirs) }
+        # (1..col_start).each { |i| possible_moves(row_start, col_start - i, $horizontal_dirs) }
+        $horizontal_dirs
     end
 
     def diagonal_dirs
         # getter
+        $diagonal_dirs = []
         row_start = self.pos[0]
         col_start = self.pos[1]
         
@@ -24,17 +29,19 @@ module Slideable
         left = row_start
 
         up < right ? up_right = up : up_right = right
+        down < left ? down_left = down : down_left = left
+        up < left ? up_left = up : up_left = left
+        down < right ? down_right = down : down_right = right
 
-        (1..up_right).each { |i| moves(row_start + i, col_start + i, DIAGONAL_DIRS) }
-        (1..down_left).each { |i| moves(row_start - i, col_start - i, DIAGONAL_DIRS) }
-
-
-        3 = board.length - highest_val
-        2 = lowest_val
+        (1..up_right).each { |i| possible_move?(row_start + i, col_start + i, $diagonal_dirs) ? next : break }
+        (1..down_left).each { |i| possible_move?(row_start - i, col_start - i, $diagonal_dirs) ? next : break }
+        (1..up_left).each { |i| possible_move?(row_start - i, col_start + i, $diagonal_dirs) ? next : break }
+        (1..down_right).each { |i| possible_move?(row_start + i, col_start - i, $diagonal_dirs) ? next : break }
+        $diagonal_dirs
     end
 
     # should return an array or places a Piece can move to
-    def moves(row, col, arr)
+    def moves
         # create an array to collect moves
         # iterate over each of the directions in which a slideable piece can move
         # use the Piece subclass #move_dir mtehod to get this info
@@ -42,14 +49,13 @@ module Slideable
         # and add them to your moves array
         # (use the grow_unblokcked_moves_in-dir helper method)
         # return the final array of moves (containing all possible moves in all directions)
-        pos = [row, col]
-        if self.board[row, col].is_a?(nullPiece)
-            arr << pos
-        elsif self.color == self.board[row, col].color
-            break 
-        elsif self.color != self.board[row, col].color
-            arr << pos
-            break
+        
+        if is_a?(Rook)
+            horizontal_dirs
+        elsif is_a?(Bishop)
+            diagonal_dirs
+        elsif is_a?(Queen)
+            diagonal_dirs + horizontal_dirs
         end
     end
 
@@ -63,7 +69,7 @@ module Slideable
 
     # this herper method is only responsible for collecting all moves in a given direction
     # the given direction is represented by two args. the combination of a dx and dy
-    def grow_unblokcked_moves_in(dx, dy)
+    def possible_move?(row, col, arr)
         # create an array to collect moves
 
         # get the piece's current row and current column
@@ -77,6 +83,18 @@ module Slideable
             # if the next position is occupied with a piece of the came color, stop looping
 
             #return the final moves array
+
+        # change to check breaks
+        pos = [row, col]
+        if self.board[row, col].is_a?(nullPiece)
+            arr << pos
+            true
+        elsif self.color == self.board[row, col].color
+            false
+        elsif self.color != self.board[row, col].color
+            arr << pos
+            false
+        end
     end
 
 end

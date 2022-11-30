@@ -15,9 +15,11 @@ class Queen < Piece
 
   def moves
 
+  end
+
 
   private 
   def move_dirs
-
+    moves
   end
 end
