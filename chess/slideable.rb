@@ -7,60 +7,22 @@ module Slideable
         row_start = self.pos[0]
         col_start = self.pos[1]
 
-        (row_start + 1...board.length).each do |i|
-            pos = [i, col_start]
-            if self.board[i, col_start].is_a?(nullPiece)
-                HORIZONTAL_DIRS << pos
-            elsif self.color == self.board[i, col_start].color
-                break 
-            elsif self.color != self.board[i, col_start].color
-                HORIZONTAL_DIRS << pos
-                break
-            end
-        end
-
-        (0...row_start).each do |i|
-            pos = [row_start - 1 - i, col_start]
-            if self.board[row_start - i - 1, col_start].is_a?(nullPiece)
-                HORIZONTAL_DIRS << pos
-            elsif self.color == self.board[row_start - i - 1, col_start].color
-                break 
-            elsif self.color != self.board[row_start - i - 1, col_start].color
-                HORIZONTAL_DIRS << pos
-                break
-            end
-        end
-
-        (col_start + 1...board.length).each do |i|
-            pos = [row_start, i]
-            if self.board[row_start, i].is_a?(nullPiece)
-                HORIZONTAL_DIRS << pos
-            elsif self.color == self.board[row_start, i].color
-                break 
-            elsif self.color != self.board[row_start, i].color
-                HORIZONTAL_DIRS << pos
-                break
-            end
-        end
-
-        (0...col_start).each do |i|
-            col = [col_start - 1 - i]
-            pos = [row_start, col]
-            if self.board[row_start, col].is_a?(nullPiece)
-                HORIZONTAL_DIRS << pos
-            elsif self.color == self.board[row_start, col].color
-                break 
-            elsif self.color != self.board[row_start, col].color
-                HORIZONTAL_DIRS << pos
-                break
-            end
-        end
-
+        (row_start + 1...board.length).each { |i|  moves(i, col_start, HORIZONTAL_DIRS) }
+        (0...row_start).each { |i| moves(row_start - 1 - i, col_start, HORIZONTAL_DIRS) }
+        (col_start + 1...board.length).each { |i| moves(row_start, i, col_start) }
+        (0...col_start).each { |i| moves(row_start, col, HORIZONTAL_DIRS) }
     end
 
-    def valid
 
-    def moves 
-        HORIZONTAL_DIR + DIAGONAL_DIRS
+    def moves(row, col, arr)
+        pos = [row, col]
+        if self.board[row, col].is_a?(nullPiece)
+            arr << pos
+        elsif self.color == self.board[row, col].color
+            break 
+        elsif self.color != self.board[row, col].color
+            arr << pos
+            break
+        end
     end
 end
